@@ -99,7 +99,7 @@ algorithm partition(arrayToSort, lowerIndex, higherIndex) is
 
         const getCode = (n) => document.querySelector(`#code-container-${n} .code-input`).value;
         const setDelta = (d) => {
-            document.querySelector(`#results-container .delta-value`).textContent = d;
+            document.querySelector(`#results-container .delta-value`).textContent = d.toFixed(5);
             document.querySelector(`#results-container .delta-percent-value`).textContent = (d * 100).toFixed(2);
         };
         const getPs = () => 1;
