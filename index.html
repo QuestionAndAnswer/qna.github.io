@@ -1,10 +1,136 @@
 <html>
-<head>
 
+<head>
+    <style>
+        .code-container {
+            display: inline-block;
+            width: 40%;
+            height: 40%;
+            margin: 2px;
+        }
+
+        .code-input {
+            width: 100%;
+            height: 300px;
+            min-height: 300px;
+            resize: vertical;
+        }
+    </style>
 </head>
+
 <body>
-    <textarea>
-        
-    </textarea> 
+    <div>
+        <div>Input:</div>
+        <div class="code-container" id="code-container-1">
+            <textarea class="code-input">
+algorithm quicksort(A, lo, hi) is 
+  if lo >= hi || lo < 0 then 
+    return
+  
+  p := partition(A, lo, hi) 
+      
+  quicksort(A, lo, p - 1)
+  quicksort(A, p + 1, hi)
+
+
+algorithm partition(A, lo, hi) is 
+  pivot := A[hi]
+
+  i := lo - 1
+
+  for j := lo to hi - 1 do 
+    if A[j] <= pivot then 
+      i := i + 1
+      swap A[i] with A[j] 
+      
+  i := i + 1
+  swap A[i] with A[hi]
+  return i
+            </textarea>
+            <div>
+                <div><span>Ps = </span><span class="ps-value">123</span></div>
+                <div><span>Pn = </span><span class="pn-value">123</span></div>
+                <div><span>SNR = </span><span class="snr-value">123</span></div>
+            </div>
+        </div>
+        <div class="code-container" id="code-container-2">
+            <textarea class="code-input">
+algorithm quicksort(arrayToSort, lowerIndex, higherIndex) is 
+  if lowerIndex >= higherIndex || lowerIndex < 0 then 
+    return
+  
+  partitionIndex := partition(arrayToSort, lowerIndex, higherIndex) 
+      
+  quicksort(arrayToSort, lowerIndex, partitionIndex - 1)
+  quicksort(arrayToSort, partitionIndex + 1, higherIndex)
+
+
+algorithm partition(arrayToSort, lowerIndex, higherIndex) is 
+  pivot := arrayToSort[higherIndex]
+
+  currentIndex := lowerIndex - 1
+
+  for j := lowerIndex to higherIndex - 1 do 
+    if arrayToSort[j] <= pivot then 
+      currentIndex := currentIndex + 1
+      swap arrayToSort[currentIndex] with arrayToSort[j] 
+      
+  currentIndex := currentIndex + 1
+  swap arrayToSort[currentIndex] with arrayToSort[higherIndex]
+  return currentIndex
+            </textarea>
+            <div>
+                <div><span>Ps = </span><span class="ps-value">123</span></div>
+                <div><span>Pn = </span><span class="pn-value">123</span></div>
+                <div><span>SNR = </span><span class="snr-value">123</span></div>
+            </div>
+        </div>
+        <div id="results-container">
+            <div>Output:</div>
+            <span>Δ = </span><span class="delta-value"> 123</span><span> ≈ </span><span
+                class="delta-percent-value">123</span><span>%</span>
+        </div>
+    </div>
+
+    <script>
+        const percent = (a, b) => a < b ? a / b : b / a;
+        const snr = (ps, pn) => ps / pn;
+        const delta = (a, b) => 1 - percent(a, b);
+
+        const getCode = (n) => document.querySelector(`#code-container-${n} .code-input`).value;
+        const setDelta = (d) => {
+            document.querySelector(`#results-container .delta-value`).textContent = d;
+            document.querySelector(`#results-container .delta-percent-value`).textContent = (d * 100).toFixed(2);
+        };
+        const getPs = () => 1;
+        const setPs = (n, ps) => document.querySelector(`#code-container-${n} .ps-value`).textContent = ps;
+        const getPn = (code) => code.length;
+        const setPn = (n, pn) => document.querySelector(`#code-container-${n} .pn-value`).textContent = pn;
+        const getSnr = (n) => snr(getPs(getCode(n)), getPn(getCode(n)));
+        const setSnr = (n, snr) => document.querySelector(`#code-container-${n} .snr-value`).textContent = snr;
+
+        const setCodeValues = (n, psf, pnf, snrf) => { setPs(n, psf()); setPn(n, pnf()); setSnr(n, snrf()); };
+
+        const recalcPs = (n) => setPs(n, getPs());
+        const recalcPn = (n) => setPn(n, getPn(getCode(n)));
+        const recalcSnr = (n) => setSnr(n, getSnr(n));
+        const recalcDelta = () => setDelta(delta(getSnr(1), getSnr(2)));
+
+        for (let i = 1; i <= 2; i++) {
+            document
+                .querySelector(`#code-container-${i} .code-input`)
+                .addEventListener("input", () => {
+                    recalcPs(i);
+                    recalcPn(i);
+                    recalcSnr(i);
+                    recalcDelta();
+                });
+            recalcPs(i);
+            recalcPn(i);
+            recalcSnr(i);
+            recalcDelta();
+        }
+    </script>
 </body>
+
 </html>
