@@ -70,10 +70,10 @@ algorithm partition(arrayToSort, lowerIndex, higherIndex) is
 
   currentIndex := lowerIndex - 1
 
-  for j := lowerIndex to higherIndex - 1 do 
-    if arrayToSort[j] <= pivot then 
+  for nextIndex := lowerIndex to higherIndex - 1 do 
+    if arrayToSort[nextIndex] <= pivot then 
       currentIndex := currentIndex + 1
-      swap arrayToSort[currentIndex] with arrayToSort[j] 
+      swap arrayToSort[currentIndex] with arrayToSort[nextIndex] 
       
   currentIndex := currentIndex + 1
   swap arrayToSort[currentIndex] with arrayToSort[higherIndex]
